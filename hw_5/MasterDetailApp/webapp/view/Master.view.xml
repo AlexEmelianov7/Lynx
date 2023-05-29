@@ -1,0 +1,72 @@
+<mvc:View
+	controllerName="zjblessons.MasterDetailApp.controller.Master"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:semantic="sap.m.semantic">
+
+	<semantic:MasterPage
+		id="page"
+		title="{i18n>MasterTitle}"
+		navButtonPress="onNavBack"
+		showNavButton="true">
+		<!-- <semantic:subHeader>
+			<Bar id="headerBar">
+				<contentMiddle>
+					<SearchField
+						id="searchField"
+						showRefreshButton="{= !${device>/support/touch} }"
+						tooltip="{i18n>masterSearchTooltip}"
+						width="100%"
+						search="onSearch">
+					</SearchField>
+				</contentMiddle>
+			</Bar>
+		</semantic:subHeader> -->
+
+		<semantic:content>
+			<List
+				id="list"
+				width="auto"
+				class="sapUiSizeCompact"
+				busyIndicatorDelay="{masterView>/delay}"
+				noDataText="{masterView>/noDataText}"
+				mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}"
+				growing="true"
+				growingScrollToLoad="true"
+				growingThreshold="25"
+				updateFinished="onUpdateFinished"
+				selectionChange="onSelectionChange">
+				<items>
+					<StandardListItem title="{i18n>ttlAll}">
+						<customData>
+							<core:CustomData key="All"/>
+						</customData>
+					</StandardListItem>
+					<StandardListItem title="{i18n>ttlGroups}">
+						<customData>
+							<core:CustomData key="Groups"/>
+						</customData>
+					</StandardListItem>
+					<StandardListItem title="{i18n>ttlSubGroups}">
+						<customData>
+							<core:CustomData key="SubGroups"/>
+						</customData>
+					</StandardListItem>
+					<StandardListItem title="{i18n>ttlRegions}">
+						<customData>
+							<core:CustomData key="Regions"/>
+						</customData>
+					</StandardListItem>
+					<StandardListItem title="{i18n>ttlPlants}">
+						<customData>
+							<core:CustomData key="Plants"/>
+						</customData>
+					</StandardListItem>
+				</items>
+			</List>
+		</semantic:content>
+
+	</semantic:MasterPage>
+
+</mvc:View>

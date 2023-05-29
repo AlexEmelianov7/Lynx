@@ -1,0 +1,183 @@
+<mvc:View
+	controllerName="zjblessons.MasterDetailApp.controller.Detail"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:table="sap.ui.table"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		id="page"
+		busy="{detailView>/busy}"
+		busyIndicatorDelay="{detailView>/delay}"
+		class="sapUiNoContentPadding">
+		<semantic:titleHeading>
+			<Title id="thDetail" level="H2" text="{detailView>/masterItem}"/>
+		</semantic:titleHeading>
+
+		<semantic:content>
+			<VBox id="contentVBox">
+				<HBox>
+					<Title 
+						level="H2" text="{detailView>/count}" visible="{= (${detailView>/masterItem}) !== 'All'}"/>
+				</HBox>
+				<VBox>
+					<table:Table
+						id="Groups"
+						visible="{= (${detailView>/masterItem}) === 'Groups'}">
+						<table:columns>
+							<table:Column>
+								<Label text="GroupID"/>
+								<table:template>
+									<Text text="{GroupID}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="GroupText"/>
+								<table:template>
+									<Text text="{GroupText}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="GroupDescription"/>
+								<table:template>
+									<Text text="{GroupDescription}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="CreatedByFullName"/>
+								<table:template>
+									<Text text="{CreatedByFullName}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="ModifiedByFullName"/>
+								<table:template>
+									<Text text="{ModifiedByFullName}"/>
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+
+					<table:Table
+						id="SubGroups"
+						visible="{= (${detailView>/masterItem}) === 'SubGroups'}">
+						<table:columns>
+							<table:Column>
+								<Label text="SubGroupID"/>
+								<table:template>
+									<Text text="{SubGroupID}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="SubGroupText"/>
+								<table:template>
+									<Text text="{SubGroupText}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="CreatedBy"/>
+								<table:template>
+									<Text text="{CreatedBy}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="CreatedByFullName"/>
+								<table:template>
+									<Text text="{CreatedByFullName}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="ModifiedByFullName"/>
+								<table:template>
+									<Text text="{ModifiedByFullName}"/>
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+
+					<table:Table
+						id="Regions"
+						visible="{= (${detailView>/masterItem}) === 'Regions'}">
+						<table:columns>
+							<table:Column>
+								<Label text="RegionID"/>
+								<table:template>
+									<Text text="{RegionID}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="RegionText"/>
+								<table:template>
+									<Text text="{RegionText}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="CreatedBy"/>
+								<table:template>
+									<Text text="{CreatedBy}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="CreatedByFullName"/>
+								<table:template>
+									<Text text="{CreatedByFullName}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="ModifiedByFullName"/>
+								<table:template>
+									<Text text="{ModifiedByFullName}"/>
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+
+					<table:Table
+						id="Plants"
+						visible="{= (${detailView>/masterItem}) === 'Plants'}">
+						<table:columns>
+							<table:Column>
+								<Label text="PlantID"/>
+								<table:template>
+									<Text text="{PlantID}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="PlantText"/>
+								<table:template>
+									<Text text="{PlantText}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="CreatedBy"/>
+								<table:template>
+									<Text text="{CreatedBy}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="CreatedByFullName"/>
+								<table:template>
+									<Text text="{CreatedByFullName}"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="ModifiedByFullName"/>
+								<table:template>
+									<Text text="{ModifiedByFullName}"/>
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+				</VBox>
+			</VBox>
+		</semantic:content>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction
+				id="shareEmail"
+				press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
