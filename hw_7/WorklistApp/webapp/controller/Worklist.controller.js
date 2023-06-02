@@ -218,6 +218,23 @@ sap.ui.define([
 						bSuccess = oControl.getItems().includes(oControl.getSelectedItem());
 						sErrorText = this.getResourceBundle().getText("errComboBox");
 						break;
+
+					case "inputRating":
+						const oType = oControl.getBinding("value").getType();
+
+						if (oControl.getValue()) {
+							try {
+								oType.validateValue(oType.parseValue(oControl.getValue(), "string"))
+							} catch (oError) { 	
+								bSuccess = false
+								sErrorText = oError.message;
+							}
+						} 
+						else {
+							bSuccess = !!oControl.getValue();
+							sErrorText = this.getResourceBundle().getText("errInputRating");
+						}
+					break;	
 				
 					default:
 						break;

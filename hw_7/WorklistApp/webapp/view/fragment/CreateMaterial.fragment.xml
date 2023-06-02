@@ -24,7 +24,7 @@
                     type: 'sap.ui.model.odata.type.Decimal', 
                     constraints: {precision: '3', scale: '2'}
                 }"
-                fieldGroupIds="input"/>
+                fieldGroupIds="inputRating"/>
             <Label
                 required="true"
                 text="{i18n>ttlGroupText}:"/>
