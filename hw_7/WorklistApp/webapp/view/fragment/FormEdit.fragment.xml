@@ -3,8 +3,9 @@
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
-	<VBox class="sapUiSmallMargin">
+	<VBox class="sapUiSmallMargin" >
 		<f:Form
+			validateFieldGroup="onValidateFieldGroup"
             editable="true">
 			<f:title>
 				<core:Title text="{i18n>ttlChangeableInfo}" />
@@ -31,21 +32,39 @@
 						<f:FormElement label="{i18n>ttlMaterialText}">
 							<f:fields>
 								<Input 
-                                    value="{MaterialText}"
+									value="{path: 'MaterialText', type: 'sap.ui.model.odata.type.String'}"
+									fieldGroupIds="formInput"
                                     maxLength="128"
                                     width="250px"
-                                    valueLiveUpdate="true"/>
+                                    valueLiveUpdate="true"
+									enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialText} !== '' || undefined || null}"
+									required="true"/>
 							</f:fields>
 						</f:FormElement>
                         <f:FormElement label="{i18n>lMaterialDescription}">
 							<f:fields>
 								<Input 
-                                    value="{MaterialText}"
+                                    value="{MaterialDescription}"
                                     maxLength="256"
                                     width="250px"
                                     valueLiveUpdate="true"
-                                    enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialText} !== '' || undefined || null}"
+                                    enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialDescription} !== '' || undefined || null}"
                                 />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>ttlRating}">
+							<f:fields>
+								<Input 
+									value="{
+                    					path: 'Rating', 
+                    					type: 'sap.ui.model.odata.type.Decimal', 
+                    					constraints: {precision: '3', scale: '2'}
+                					}" 
+									fieldGroupIds="formInput"
+                                    width="250px"
+                                    valueLiveUpdate="true"
+									enabled="{= !${objectView>/editMode} &amp;&amp; ${Rating} !== '' || undefined || null}"
+									required="true"/>
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>
@@ -54,9 +73,9 @@
 					<f:formElements>
 						<f:FormElement label="{i18n>lGroupText}">
 							<f:fields>
-								<Select
+								<ComboBox
+									fieldGroupIds="formComboBox"
 									width="15em"
-									forceSelection="false"
 									selectedKey="{GroupID}"
 									items="{
 										path: '/zjblessons_base_Groups',
@@ -75,14 +94,14 @@
 									<core:Item 
 										key="{GroupID}" 
 										text="{GroupText}"/>
-								</Select>
+								</ComboBox>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>lSubGroupText}">
 							<f:fields>
-								<Select
+								<ComboBox
+									fieldGroupIds="formComboBox"
 									width="15em"
-									forceSelection="false"
 									selectedKey="{SubGroupID}"
 									items="{
 										path: '/zjblessons_base_SubGroups',
@@ -101,7 +120,7 @@
 									<core:Item 
 										key="{SubGroupID}" 
 										text="{SubGroupText}"/>
-								</Select>
+								</ComboBox>
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>

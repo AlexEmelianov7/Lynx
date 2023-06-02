@@ -19,6 +19,7 @@
 
 		<semantic:titleCustomTextActions>
 			<Button
+				enabled="{= !${objectView>/validateError}}"
 				visible="{objectView>/editMode}"
 			 	press="onPressSaveMaterial"
 				icon="{i18n>iSave}"
@@ -150,7 +151,6 @@
 								visible="{objectView>/editMode}">
 								<Input 
 									value="{MaterialDescription}"
-									fieldGroupIds="listInput"
 									maxLength="256" 
 									enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialDescription} !== '' || undefined || null}"
 									width="20em"/>
@@ -159,13 +159,13 @@
 								label="{i18n>lRating}"
 								visible="{objectView>/editMode}">
 								<Input 
-									 value="{
+									value="{
                     					path: 'Rating', 
                     					type: 'sap.ui.model.odata.type.Decimal', 
                     					constraints: {precision: '3', scale: '2'}
                 					}" 
 									fieldGroupIds="listInput"
-									enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialDescription} !== '' || undefined || null}"
+									enabled="{= !${objectView>/editMode} &amp;&amp; ${Rating} !== '' || undefined || null}"
 									width="20em"
 									required="true"/>
 							</InputListItem>

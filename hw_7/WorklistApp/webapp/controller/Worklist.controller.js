@@ -211,12 +211,12 @@ sap.ui.define([
 				switch (oControl.getFieldGroupIds()[0]) {
 					case "input":
 						bSuccess = !!oControl.getValue();
-						sErrorText = "Enter Text!";
+						sErrorText = this.getResourceBundle().getText("errInput");
 						break;
 
 					case "comboBox":
 						bSuccess = oControl.getItems().includes(oControl.getSelectedItem());
-						sErrorText = "Select Value!";
+						sErrorText = this.getResourceBundle().getText("errComboBox");
 						break;
 				
 					default:
