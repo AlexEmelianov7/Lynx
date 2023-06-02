@@ -156,17 +156,24 @@ sap.ui.define([
 
 			onPressEditMaterial: function () {
 				this._setEditMode(true);
+				this._clearValidateCreateMaterial();
 			},
 
 			onPressSaveMaterial: function () {
 				this._validateSaveMaterial();
 
-				this.getModel().submitChanges();
-				this._setEditMode(false);
+				if (this.getModel().hasPendingChanges() || !this.getModel("objectView").getProperty("/validateError")) {
+					this.getModel().submitChanges();
+					this._setEditMode(false);
+				}
+
+				// this.getModel().submitChanges();
+				// this._setEditMode(false);
 			},
 
 			onPressCancelEditMaterial: function () {
 				this._clearValidateCreateMaterial();
+				this.getModel("objectView").setProperty("/validateError", false);
 
 				this.getModel().resetChanges();		
 				this._setEditMode(false);	
@@ -174,8 +181,9 @@ sap.ui.define([
 
 			onChangeMode: function(oEvent) {
 				const bState = oEvent.getParameter("state");
+				!bState && this._validateSaveMaterial();
 
-				if (!bState && this.getModel().hasPendingChanges()) {
+				if (!bState && this.getModel().hasPendingChanges() || this.getModel("objectView").getProperty("/validateError")) {
 					const oMessageBox = new MessageBox.confirm(this.getResourceBundle().getText("msgSaveChanges"), {
 						title: this.getResourceBundle().getText("ttlConfirmAction"),
 						actions: [
@@ -202,6 +210,8 @@ sap.ui.define([
 				else {
 					this._setEditMode(bState);
 				}
+
+				this._clearValidateCreateMaterial();
 			},
 
 			_addFormContent: function(sMode) {
@@ -236,7 +246,7 @@ sap.ui.define([
 			_validateSaveMaterial: function() {
 				const aFieldsIds = this.getView().getControlsByFieldGroupId();
 
-				aFieldsIds.forEach((oItem) => {
+				aFieldsIds.forEach((oControl) => {
 					if(oControl.mProperties.fieldGroupIds[0]){
 						oControl.fireValidateFieldGroup()
 					}
@@ -256,19 +266,20 @@ sap.ui.define([
 
 			onValidateFieldGroup: function(oEvent) {
 				const oControl = oEvent.getSource();
+				const sSelectedKey = this.getModel("objectView").getProperty("/selectedKeyITB");
 
 				let bSuccess = true;
 				let sErrorText;
 
 				switch (oControl.getFieldGroupIds()[0]) {
-					case "listInput":
+					case sSelectedKey === "list" ? "listInput" : "formInput":
 						bSuccess = !!oControl.getValue();
-						sErrorText = "Enter Text!";
+						sErrorText = this.getResourceBundle().getText("errInput");
 						break;
 
-					case "listComboBox":
+					case sSelectedKey === "list" ? "listComboBox" : "formComboBox":
 						bSuccess = oControl.getItems().includes(oControl.getSelectedItem());
-						sErrorText = "Select Value!";
+						sErrorText = this.getResourceBundle().getText("errComboBox");
 						break;
 				
 					default:
