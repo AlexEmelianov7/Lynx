@@ -164,7 +164,7 @@
                     					type: 'sap.ui.model.odata.type.Decimal', 
                     					constraints: {precision: '3', scale: '2'}
                 					}" 
-									fieldGroupIds="listInputRating"
+									fieldGroupIds="listInput"
 									enabled="{= !${objectView>/editMode} &amp;&amp; ${Rating} !== '' || undefined || null}"
 									width="20em"
 									required="true"/>

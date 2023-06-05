@@ -60,7 +60,7 @@
                     					type: 'sap.ui.model.odata.type.Decimal', 
                     					constraints: {precision: '3', scale: '2'}
                 					}" 
-									fieldGroupIds="formInputRating"
+									fieldGroupIds="formInput"
                                     width="250px"
                                     valueLiveUpdate="true"
 									enabled="{= !${objectView>/editMode} &amp;&amp; ${Rating} !== '' || undefined || null}"
