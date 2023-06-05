@@ -3,10 +3,9 @@
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
-	<VBox class="sapUiSmallMargin" >
+	<VBox class="sapUiSmallMargin">
 		<f:Form
-			validateFieldGroup="onValidateFieldGroup"
-            editable="true">
+			editable="false">
 			<f:title>
 				<core:Title text="{i18n>ttlChangeableInfo}" />
 			</f:title>
@@ -31,40 +30,17 @@
 					<f:formElements>
 						<f:FormElement label="{i18n>ttlMaterialText}">
 							<f:fields>
-								<Input 
-									value="{path: 'MaterialText', type: 'sap.ui.model.odata.type.String'}"
-									fieldGroupIds="formInput"
-                                    maxLength="128"
-                                    width="250px"
-                                    valueLiveUpdate="true"
-									enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialText} !== '' || undefined || null}"
-									required="true"/>
+								<Text text="{MaterialText}"/>
 							</f:fields>
 						</f:FormElement>
                         <f:FormElement label="{i18n>lMaterialDescription}">
 							<f:fields>
-								<Input 
-                                    value="{MaterialDescription}"
-                                    maxLength="256"
-                                    width="250px"
-                                    valueLiveUpdate="true"
-                                    enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialDescription} !== '' || undefined || null}"
-                                />
+								<Text text="{MaterialDescription}"/>
 							</f:fields>
 						</f:FormElement>
-						<f:FormElement label="{i18n>ttlRating}">
+						<f:FormElement label="{i18n>lRating}">
 							<f:fields>
-								<Input 
-									value="{
-                    					path: 'Rating', 
-                    					type: 'sap.ui.model.odata.type.Decimal', 
-                    					constraints: {precision: '3', scale: '2'}
-                					}" 
-									fieldGroupIds="formInputRating"
-                                    width="250px"
-                                    valueLiveUpdate="true"
-									enabled="{= !${objectView>/editMode} &amp;&amp; ${Rating} !== '' || undefined || null}"
-									required="true"/>
+								<Text text="{Rating}"/>
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>
@@ -73,61 +49,20 @@
 					<f:formElements>
 						<f:FormElement label="{i18n>lGroupText}">
 							<f:fields>
-								<ComboBox
-									fieldGroupIds="formComboBox"
-									width="15em"
-									selectedKey="{GroupID}"
-									items="{
-										path: '/zjblessons_base_Groups',
-										sorter: { 
-											path: 'GroupText',
-											descending: true 
-										},
-										filters: [
-											{
-												path: 'GroupText',
-												operator: 'NE',
-												value1: null
-											}
-										]
-									}">
-									<core:Item 
-										key="{GroupID}" 
-										text="{GroupText}"/>
-								</ComboBox>
+								<Text text="{GroupText}" />
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>lSubGroupText}">
 							<f:fields>
-								<ComboBox
-									fieldGroupIds="formComboBox"
-									width="15em"
-									selectedKey="{SubGroupID}"
-									items="{
-										path: '/zjblessons_base_SubGroups',
-										sorter: { 
-											path: 'SubGroupText',
-											descending: true 
-										},
-										filters: [
-											{
-												path: 'SubGroupText',
-												operator: 'NE',
-												value1: null
-											}
-										]
-									}">
-									<core:Item 
-										key="{SubGroupID}" 
-										text="{SubGroupText}"/>
-								</ComboBox>
+								<Text text="{SubGroupText}" />
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>
 				</f:FormContainer>
 			</f:formContainers>
 		</f:Form>
-		<f:Form>
+		<f:Form
+			editable="false">
 			<f:title>
 				<core:Title text="{i18n>ttlInfo}" />
 			</f:title>
@@ -159,8 +94,8 @@
 										formatOptions: {
 											style: 'medium'
 										}
-									}"
-                                />
+									}" 
+								/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>lCreatedBy}">
@@ -182,7 +117,7 @@
 											style: 'long'
 										}
 									}" 
-							    />
+								/>
 							</f:fields>
 						</f:FormElement>
                         <f:FormElement label="{i18n>lModifiedBy}">

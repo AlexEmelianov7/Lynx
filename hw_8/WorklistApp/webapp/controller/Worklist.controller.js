@@ -30,6 +30,11 @@ sap.ui.define([
 					tableNoDataText : this.getResourceBundle().getText("tableNoDataText"),
 					tableBusyDelay : 0,
 					validateError: false,
+					dialogParams: {
+						height: "400px",
+						width: "250px"
+					},
+					textAreaHeight: "10em"
 				});
 				this.setModel(oViewModel, "worklistView");
 
@@ -65,6 +70,34 @@ sap.ui.define([
 				history.go(-1);
 			},
 
+			_pEscapeHandler: function(oPromise) {
+				if(!this.oConfirmEscapePressPreventDialog) {
+					this.oConfirmEscapePressPreventDialog = new sap.m.Dialog({
+						title: "Are u sure?",
+						content: new sap.m.Text({
+							text: "Your unsaved changes will be lost"
+						}),
+						type: sap.m.DialogType.Message,
+						icon: sap.ui.core.IconPool.getIconURI("message information"),
+						buttons: [
+							new sap.m.Button({
+								text: "Yes?",
+								press: () => {
+									this.oConfirmEscapePressPreventDialog.close();
+									this.oCreateDialog.close();
+								}
+							}),
+							new sap.m.Button({
+								text: "No",
+								press: () => this.oConfirmEscapePressPreventDialog.close()
+							})
+						]
+					})
+				}
+
+				this.oConfirmEscapePressPreventDialog.open();
+			},
+
 			_loadCreateFragment: function(oEntryContext){
 				if(!this.oCreateDialog){
 					this.pCreateMaterial = Fragment.load({
@@ -78,14 +111,15 @@ sap.ui.define([
 					});
 				}
 				this.pCreateMaterial.then(oDialog => {
+					oDialog.setEscapeHandler(this._pEscapeHandler.bind(this))
 					oDialog.setBindingContext(oEntryContext);
 					oDialog.open();
 				})
 			},
 
-			_closeCreateDialog: function() {
-				this.oCreateDialog.close();
-			},
+			// _clearCreateDialog: function() {
+			// 	this.oCreateDialog.close();
+			// },
 
 			_validateSaveMaterial: function() {
 				const aFieldsIds = this.getView().getControlsByFieldGroupId();
@@ -102,11 +136,12 @@ sap.ui.define([
 
 				if (!this.getModel("worklistView").getProperty("/validateError")) {
 					this.getModel().submitChanges();
-					this._closeCreateDialog();
+
+					this.oCreateDialog.close();
 				}
 			},
 
-			_clearValidateCreateMaterial: function () {
+			_clearCreateMaterialDialog: function () {
 				const aFieldsIds = this.getView().getControlsByFieldGroupId();
 
 				aFieldsIds.forEach((oControl) => {
@@ -118,10 +153,10 @@ sap.ui.define([
 			},
 
 			onPressCloseCreateDialog: function () {
-				this._clearValidateCreateMaterial();
+				this._clearCreateMaterialDialog();
 
 				this.getModel().resetChanges();
-				this._closeCreateDialog();	
+				this.oCreateDialog.close();	
 			},
 
 			onPressCreateMaterial: function(){
@@ -243,6 +278,71 @@ sap.ui.define([
 
 				oControl.setValueState(bSuccess ? "None" : "Error");
 				oControl.setValueStateText(sErrorText); 
+			},
+
+			onBeforeCloseDialog: function(oEvent) {
+				const oSource = oEvent.getSource();
+				const oDialogSize = oSource._oManuallySetSize;
+
+				if (oDialogSize) {
+					this.getModel("worklistView").setProperty(
+						"/dialogParams/height", 
+						oDialogSize.height + "px"
+					);
+					this.getModel("worklistView").setProperty(
+						"/dialogParams/width", 
+						oDialogSize.width + "px"
+					);
+				}
+				else {
+					oSource.destroy();
+					this.oCreateDialog = null;
+				}
+
+				this._clearCreateMaterialDialog();
+			},
+
+			onPressMaterialDetailedInfo: function(oEvent) {
+				const oSource = oEvent.getSource();
+
+				if (!this._pMaterialDetailedInfoPopover) {
+					this._pMaterialDetailedInfoPopover = Fragment.load({
+						id: this.getView().getId(),
+						name: "zjblessons.WorklistApp.view.fragment.MaterialDetailedInfoPopover",
+						controller: this
+					}).then(oPopover => {
+						this.getView().addDependent(oPopover);
+						return oPopover;
+					});
+				}
+				this._pMaterialDetailedInfoPopover.then(oPopover => {
+					oPopover.setBindingContext(oSource.getBindingContext());
+					oPopover.openBy(oSource);
+				});
+			},
+
+			onPressOpenMaterial: function(oEvent) {
+				this._showObject(oEvent.getSource());
+			},
+
+			onPressClosePopover: function(oEvent) {
+				oEvent.getSource().getParent().getParent().close();
+			},
+
+			onPressOpenActionSheet: function(oEvent) {
+				const oSource = oEvent.getSource();
+
+				if (!this._pActionSheet) {
+					this._pActionSheet = Fragment.load({
+						id: this.getView().getId(),
+						name: "zjblessons.WorklistApp.view.fragment.ActionSheet",
+						controller: this
+					}).then(oActionSheet => {
+						this.getView().addDependent(oActionSheet);
+						return oActionSheet;
+					});
+				}
+				this._pActionSheet.then(oActionSheet => oActionSheet.openBy(oSource));
 			}
 
 		});

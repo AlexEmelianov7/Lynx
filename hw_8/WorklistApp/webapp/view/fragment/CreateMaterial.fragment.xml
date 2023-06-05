@@ -2,7 +2,13 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Dialog
-        title="{i18n>ttlCreateMaterial}">
+        title="{i18n>ttlCreateMaterial}"
+        contentHeight="{worklistView>/dialogParams/height}" 
+        contentWidth="{worklistView>/dialogParams/width}" 
+        draggable="true" 
+        resizable="true"
+        class="sapUiSizeCompact"
+        beforeClose="onBeforeCloseDialog">
         <VBox
             class="sapUiSmallMargin"
             validateFieldGroup="onValidateFieldGroup">
@@ -77,7 +83,7 @@
                 width="100%"
                 value="{MaterialDescription}"
                 maxLength="256"
-                height="10em"/>
+                height="{worklistView>/textAreaHeight}"/>
         </VBox>
         <beginButton>
             <Button
