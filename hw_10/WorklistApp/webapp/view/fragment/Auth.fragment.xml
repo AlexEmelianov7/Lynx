@@ -1,0 +1,66 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Dialog
+        id="authDialog"
+        title="{i18n>ttlAuthDialog}"
+        draggable="true" 
+        resizable="true"
+        class="sapUiSizeCompact"
+        beforeClose="onBeforeCloseAuth">
+        <VBox
+            class="sapUiSmallMargin"
+            validateFieldGroup="onValidateAuthFields">
+            <Label
+                required="true"
+                text="{i18n>lEmail}:"/>
+             <Input
+                fieldGroupIds="inputEmail"
+                placeholder="Your email"
+                type="Email"
+                maxLength="15"/>
+            <Label
+                required="true"
+                text="{i18n>lPassword}:"/>
+            <Input
+                fieldGroupIds="input"
+                placeholder="Your password"
+                type="Password"
+                maxLength="15"/>
+            <Label
+                required="true"
+                text="{i18n>lName}:"/>
+             <Input
+                fieldGroupIds="input"
+                placeholder="Your name"
+                maxLength="20"/>
+            <Label
+                required="true"
+                text="{i18n>lSurname}:"/>
+            <Input
+                fieldGroupIds="input"
+                placeholder="Your surname"
+                maxLength="20"/>
+            <Label
+                required="true"
+                text="{i18n>lAge}:"/>
+            <Input
+                fieldGroupIds="input"
+                placeholder="Your age"
+                type="Number"
+                maxLength="3"/>
+        </VBox>
+        <beginButton>
+            <Button
+                text="{i18n>btnSave}"
+                type="Emphasized"
+                press="onPressSaveAuth"/>
+        </beginButton>
+        <endButton>
+            <Button
+                text="{i18n>btnClose}"
+                press="onPressCloseAuthDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
+

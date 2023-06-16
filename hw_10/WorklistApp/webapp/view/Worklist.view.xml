@@ -1,0 +1,160 @@
+<mvc:View
+	controllerName="zjblessons.WorklistApp.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:core="sap.ui.core"
+>
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false"
+		showFooter="true">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>worklistTitle}" />
+		</semantic:titleHeading>
+
+		<semantic:titleCustomTextActions>
+			<Button 
+				press="onPressOpenAuthDialog"
+				text="Sign up"/>
+		</semantic:titleCustomTextActions>
+
+		<semantic:content>
+			<Table
+				id="table"
+				width="auto"
+				items="{
+					path: '/zjblessons_base_Materials',
+					sorter: {
+						path: 'Created',
+						descending: true
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingThreshold='25'
+				growingScrollToLoad="true"
+				updateFinished="onUpdateFinished">
+
+				<headerToolbar>
+					<Toolbar>
+						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
+						<ToolbarSpacer />
+						<SearchField
+							id="searchField"
+							tooltip="{i18n>worklistSearchTooltip}"
+							search="onSearch"
+							liveChange="onSearch"
+							width="auto">
+						</SearchField>
+						<Button 
+							press="onPressOpenActionSheet"
+							text="{i18n>btnActions}"
+							type="Attention"/>
+						<Button 
+							press="onPressOpenSelectDialog"
+							text="{i18n>btnShowSelectDialog}"
+							type="Ghost"
+						>
+							<customData>
+								<core:CustomData 
+									key="responsivePadding" 
+									value="true" />			
+							</customData>
+						</Button>
+						<Button 
+							press="onPressOpenDateTimeDialog"
+							text="Date time"
+							type="Reject"/>
+						<Button 
+							press="onPressReadMaterials"
+							text="Read"
+							type="Accept"/>
+					</Toolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column>
+						<Text text="{i18n>ttlMaterialText}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>ttlMaterialDescription}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>ttlCreated}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>ttlCreatedByFullName}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>ttlModifiedByFullName}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>ttlModified}"/>
+					</Column>
+					<Column
+						width="5%"/>
+				</columns>
+
+				<items>
+					<ColumnListItem
+						type="Navigation"
+						press="onPressShowMaterial">
+						<cells>
+							<Link
+								text="{MaterialText}"
+								press="onPressMaterialDetailedInfo"/>
+							<ObjectIdentifier
+								title="{MaterialDescription}"/>
+							<ObjectIdentifier
+								title="{
+									path: 'Created', 
+									type: 'sap.ui.model.type.DateTime',
+									formatOptions: {
+										style: 'short'
+									}
+							}"/>
+							<ObjectIdentifier
+								title="{CreatedByFullName}"/>
+							<ObjectIdentifier
+								title="{ModifiedByFullName}"/>
+							<ObjectIdentifier
+								title="{
+									path: 'Modified', 
+									type: 'sap.ui.model.type.DateTime',
+									formatOptions: {
+										style: 'medium'
+									}
+							}"/>
+							<Button
+							 	press="onPressDeleteMaterial"
+								icon="{i18n>iDelete}"
+								type="Transparent"
+								tooltip="{il18n>btnDelete}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+		<semantic:footerCustomActions>
+			<Button 
+				id="messagePopoverBtn"
+				press="onPressMessagePopover"
+				text="{path: 'worklistView>/Messages', formatter: '.formatter.btnTextFormatter'}"
+				icon="{path: 'worklistView>/Messages', formatter: '.formatter.btnIconFormatter'}"
+				type="{path: 'worklistView>/Messages', formatter: '.formatter.btnTypeFormatter'}"
+			/>
+		</semantic:footerCustomActions>
+
+		<!-- <semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction> -->
+
+	</semantic:SemanticPage>
+
+</mvc:View>
