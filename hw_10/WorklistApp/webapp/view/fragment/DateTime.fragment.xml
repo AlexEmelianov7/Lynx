@@ -1,0 +1,40 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Dialog
+        id="dateTimeDialog"
+        title="{i18n>ttlDateTimeDialog}"
+        draggable="true" 
+        resizable="true"
+        class="sapUiSizeCompact"
+        beforeClose="onBeforeCloseAuth">
+        <VBox
+            class="sapUiSmallMargin"
+            validateFieldGroup="onValidateAuthFields">
+            <DatePicker
+                fieldGroupIds="datePicker"
+                displayFormat="dd/MM/yyyy"
+                valueFormat="dd/MM/yyyy"
+                placeholder="Enter date"
+                class="sapUiSmallMarginBottom"
+                width="18em"/>
+            <TimePicker
+                fieldGroupIds="timePicker"
+                placeholder="Enter time"
+                class="sapUiSmallMarginBottom"
+                width="18em"/>
+        </VBox>
+        <beginButton>
+            <Button
+            text="{i18n>btnSave}"
+            type="Emphasized"
+            press="onPressSaveAuth"/>
+        </beginButton>
+        <endButton>
+            <Button
+            text="{i18n>btnClose}"
+            press="onPressCloseDateTimeDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
+
