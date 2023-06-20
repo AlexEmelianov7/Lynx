@@ -1,0 +1,49 @@
+<mvc:View
+	controllerName="zjblessons.WorklistEventBus.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<VBox>
+				<Title text="{i18n>worklistTitle}"/>
+				<Label 
+					class="sapUiSmallMarginTop" 
+					text="{worklistView>/worklistTableTitle}" 
+					design="Bold"/>
+			</VBox>
+		</semantic:titleHeading>
+
+		<semantic:content>
+			<List
+				id="list"
+				selectionChange="onSelectionChange"
+				mode="SingleSelectMaster"
+				width="auto"
+				items="{
+					path: '/zjblessons_base_Materials',
+					sorter: {
+						path: 'Created',
+						descending: true
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingThreshold="25"
+				growingScrollToLoad="true"
+				updateFinished="onUpdateFinished">
+				<StandardListItem
+					title="{MaterialText}"
+					description="{MaterialDescription}"/>
+			</List>
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
