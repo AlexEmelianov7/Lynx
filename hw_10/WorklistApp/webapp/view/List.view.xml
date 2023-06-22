@@ -1,0 +1,39 @@
+<mvc:View
+	controllerName="zjblessons.WorklistApp.controller.List"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout"
+>
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<VBox>
+				<Title text="{i18n>worklistTitle}"/>
+				<Label 
+					class="sapUiSmallMarginTop" 
+					text="{listView>/listTableTitle}" 
+					design="Bold"/>
+			</VBox>
+		</semantic:titleHeading>
+
+		<semantic:content>
+			<List
+				id="list"
+				width="auto"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{listView>/listBusyDelay}"
+				growing="true"
+				growingThreshold="25"
+				growingScrollToLoad="true"
+				updateFinished="onUpdateFinished"/>	
+		</semantic:content>
+		
+	</semantic:SemanticPage>
+
+</mvc:View>

@@ -1,0 +1,55 @@
+<mvc:View
+	controllerName="zjblessons.WorklistEventBus.controller.Object"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	busy="{objectView>/busy}"
+	busyIndicatorDelay="0">
+	
+	<ObjectHeader
+		title="{MaterialText}"
+		condensed="true"
+		class="sapUiResponsivePadding--header">
+			<ObjectAttribute text="{i18n>ttlMaterialDescription}: {MaterialDescription}; 
+									{i18n>ttlRating}: {Rating}; 
+									{i18n>ttlCreated}: {path: 'Created', 
+														type: 'sap.ui.model.type.DateTime',
+														formatOptions: {
+															style: 'short'
+														}}" />
+	</ObjectHeader>
+
+	<VBox class="sapUiMediumMargin">
+		<Label 
+			text="{i18n>lMaterialText}"
+			design="Bold"/>
+		<FlexBox>
+			<Input 
+				id="inputMaterialText"
+				value="{MaterialText}"
+				width="20em"
+				maxLength="128"
+				class="sapUiTinyMarginEnd"/>
+			<Button
+				press="onPressMaterialTextSubmit"
+				text="{i18n>btnSubmit}"
+				type="Accept"/>
+		</FlexBox>
+
+		<Label 
+			text="{i18n>lMaterialDescription}" 
+			design="Bold"/>
+		<FlexBox>
+			<Input
+				id="inputMaterialDescr"
+				value="{MaterialDescription}"
+				width="20em"
+				class="sapUiTinyMarginEnd"
+				maxLength="256"/>
+			<Button
+				press="onPressMaterialDescrSubmit"
+				text="{i18n>btnSubmit}"
+				type="Accept"/>
+		</FlexBox>	
+	</VBox>
+
+</mvc:View>
